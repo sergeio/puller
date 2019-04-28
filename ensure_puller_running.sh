@@ -1,10 +1,10 @@
 #!/bin/bash
 # ensures puller is running
 
-# Make symlink in ~/bin
+# Make symlink in /usr/bin
 # make executable
 
-process='/root/code/puller/venv/bin/python venv/bin/flask run'
+process='/root/code/puller/venv/bin/python /root/code/puller/venv/bin/flask run'
 makerun="/root/code/puller/start.sh"
 
 if ps ax | grep -v grep | grep "$process" > /dev/null
