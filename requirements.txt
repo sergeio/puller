@@ -1,0 +1,4 @@
+gunicorn
+flask
+gitpython
+ipython
