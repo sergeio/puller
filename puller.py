@@ -1,6 +1,9 @@
+import subprocess
+
 import git
 from flask import Flask
 from flask import request
+
 app = Flask(__name__)
 
 
@@ -19,6 +22,14 @@ def push_event():
         # Out[10]: u''
         repo = git.Repo('~/code/abacus')
         info = repo.remote().pull()
+
+        # Restart abacus
+        p = subprocess.Popen(
+            ['pkill', '-f', 'abacus/venv/bin/python.*flask run'],
+            stdout=subprocess.PIPE)
+        _, __ = p.communicate()
+        subprocess.Popen(['ensure_abacus_running.sh'])
+
         if info:
             return 'Pulled branch successfully: ' + info[0].name, 200
         return 'Master push with no info. Maybe pulled?', 400
