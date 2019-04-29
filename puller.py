@@ -23,12 +23,19 @@ def push_event():
         repo = git.Repo('~/code/abacus')
         info = repo.remote().pull()
 
-        # Restart abacus
+        # Restart abacus and frontend
         p = subprocess.Popen(
             ['pkill', '-f', 'abacus/venv/bin/python.*flask run'],
             stdout=subprocess.PIPE)
         _, __ = p.communicate()
         subprocess.Popen(['ensure_abacus_running.sh'])
+
+        p = subprocess.Popen(
+            ['pkill', '-f', 'npm'],
+            stdout=subprocess.PIPE)
+        _, __ = p.communicate()
+
+        subprocess.Popen(['ensure_frontend_running.sh'])
 
         if info:
             return 'Pulled branch successfully: ' + info[0].name, 200
