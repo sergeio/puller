@@ -21,7 +21,8 @@ def push_event():
         # In [10]: g.clone('git@github.com:sergeio/abacus.git')
         # Out[10]: u''
         repo = git.Repo('~/code/abacus')
-        info = repo.remote().pull()
+        info = repo.remote().fetch()
+        repo.git.reset('--hard', 'origin/master')
 
         # Restart abacus and frontend
         p = subprocess.Popen(
